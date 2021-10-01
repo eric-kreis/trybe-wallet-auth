@@ -30,7 +30,7 @@ function Login () {
       await login(email, password)
       history.push('/carteira');
     } catch(error) {
-      return global.alert(error.message)
+      return global.alert('Falha ao fazer o login');
     }
   }
 
