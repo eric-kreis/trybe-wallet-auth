@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { userLogin } from '../actions';
+import { app } from '../firebase';
 
 function Login () {
   const [email, setEmail] = useState('');
@@ -33,6 +34,8 @@ function Login () {
   function handleShowPassword(boll) {
     boll ? setShowPassword('text') : setShowPassword('password')
   }
+
+  console.log(app);
 
   return (
     <main>

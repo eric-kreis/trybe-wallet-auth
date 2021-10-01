@@ -6,11 +6,14 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
+import AuthProvider from './context/AuthProvider';
 
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={ store }>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </Provider>
   </BrowserRouter>,
   document.getElementById('root'),
