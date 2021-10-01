@@ -1,10 +1,23 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { useAuth } from '../context/AuthProvider';
 
 function Header () {
-  const email = useSelector((state) => state.user.email);
   const expenses = useSelector((state) => state.wallet.expenses);
+  const history = useHistory();
   
+  const { currentUser, logout } = useAuth();
+
+  async function signOut() {
+    try{
+      await logout();
+      history.push('/')
+    } catch (error){
+      return global.alert(error.message)
+    }
+  }
+
   const total = expenses.reduce((acc, { value, currency, exchangeRates }) => {
     const exchangeRate = parseFloat(exchangeRates[currency].ask);
     acc += value * exchangeRate;
@@ -19,13 +32,14 @@ function Header () {
       <div>
         <span data-testid="email-field">
           Email: 
-          { email }
+          { currentUser.email }
         </span>
         <span data-testid="total-field">
           Despesa total: R$
           { roundedTotal }
           <span data-testid="header-currency-field">BRL</span>
         </span>
+        <button type="button" onClick={signOut}>Logout</button>
       </div>
     </header>
   );

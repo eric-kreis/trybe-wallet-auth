@@ -1,34 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { useAuth } from '../context/AuthProvider';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useAuth } from '../context/AuthProvider'
 
-function Login () {
+function Register () {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [blockSubmit, setBlockSubmit] = useState(true);
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState('password');
 
-  const { login } = useAuth();
+  const { singUp } = useAuth();
 
   const history = useHistory();
 
   function validateInputs() {
     const validEmail = /\S+@\S+\.\S+/;
     const validPassword = 6;
-    if (validEmail.test(email) && password.length >= validPassword) {
-      setBlockSubmit(false)
-    } else {
-      setBlockSubmit(true)
+    if (!validEmail.test(email)) {
+      throw Error('Email inválido')
+    } 
+
+    if(password !== confirmPassword ) {
+      throw Error('As senhas não combinam')
+    }
+    
+    if(password.length < validPassword) {
+      throw Error('A senha deve ter pelo menos 6 caracteres')
     }
   }
-
-  useEffect(validateInputs, [email, password])
 
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      await login(email, password)
-      history.push('/carteira');
+      validateInputs();
+      await singUp(email, password).then((user) => console.log(user))
+      history.push('/');
     } catch(error) {
       return global.alert(error.message)
     }
@@ -43,7 +48,7 @@ function Login () {
       <h1>TrybeWallet</h1>
       <form onSubmit={ handleSubmit }>
         <img src="https://media.giphy.com/media/67ThRZlYBvibtdF9JH/giphy.gif" alt="gif pernalonga contando dinheiro" />
-        <h3>Login</h3>
+        <h3>Cadastrar novo usuário</h3>
         <input
           name="email"
           type="text"
@@ -60,6 +65,14 @@ function Login () {
           value={ password }
           onChange={ ({target: { value }}) => setPassword(value) }
         />
+        <input
+          name="confirmPassword"
+          type={showPassword}
+          placeholder="SENHA"
+          data-testid="password-input"
+          value={ confirmPassword }
+          onChange={ ({target: { value }}) => setConfirmPassword(value) }
+        />
         <label htmlFor="reveal-password"> 
           <input 
             type="checkbox" 
@@ -70,17 +83,13 @@ function Login () {
         </label>
         <button
           type="submit"
-          disabled={ blockSubmit }
-          className={ blockSubmit ? 'disabled-btn' : 'login-btn' }
           onClick={handleSubmit}
         >
-          Entrar
+          Cadastrar
         </button>
-        <Link to="/registro" className="login-btn" >Cadastro</Link>
-        <Link to="/redefinirsenha" className="login-btn" >Esqueceu a senha?</Link>
       </form>
     </main>
   );
 }
 
-export default Login;
+export default Register;
