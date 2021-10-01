@@ -61,7 +61,6 @@ form {
   gap: 16px;
   justify-content: center;
   margin: auto;
-  margin-top: 10vh;
   padding: 50px 20px;
   width: fit-content;
 
@@ -78,6 +77,13 @@ form {
     border-radius: 4px;
     padding: 4px;
   }
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 main h1 {
@@ -153,10 +159,10 @@ main h1 {
   color: $secondary-color;
   cursor: pointer;
   font-size: 16px;
-  padding: 8px 40px;
+  padding: 8px 0;
   text-align: center;
   text-decoration: none;
-
+  min-width: 250px;
   &:hover {
     opacity: 0.8;
   }
@@ -170,7 +176,64 @@ main h1 {
   cursor: not-allowed;
   font-size: 16px;
   opacity: 0.4;
-  padding: 8px 40px;
+  padding: 8px 0;
   text-align: center;
   text-decoration: none;
+  min-width: 250px;
+}
+
+.google-btn {
+  min-width: 250px;
+  border-radius: 4px;
+  font-weight: 500;
+  background: #ea4335;
+  color: #FFF;
+  padding: 8px 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  border: 2px solid $secondary-color;
+
+
+  transition: filter 0.2s;
+
+  img {
+      margin-right: 16px;
+      width: 45px;
+      height: 30px;
+  }
+
+  &:hover {
+      filter: brightness(0.9);
+  }
+}
+
+.profile-img {
+  width: 40px;
+  border-radius: 50px;
+  margin-right: 8px;
+}
+
+.logout-btn {
+  background-color: red;
+  border: none;
+  margin-left: 16px;
+  border-radius: 4px;
+  color: $secondary-color;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  text-align: center;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.4;
+  }
+
+  &:active {
+    transform: translateY(2px);
+  }
 }

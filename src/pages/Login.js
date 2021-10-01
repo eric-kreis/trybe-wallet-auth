@@ -7,6 +7,7 @@ function Login () {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [blockSubmit, setBlockSubmit] = useState(true);
+  const [showPassword, setShowPassword] = useState('password');
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -29,6 +30,10 @@ function Login () {
     history.push('/carteira');
   }
 
+  function handleShowPassword(boll) {
+    boll ? setShowPassword('text') : setShowPassword('password')
+  }
+
   return (
     <main>
       <h1>TrybeWallet</h1>
@@ -45,12 +50,20 @@ function Login () {
         />
         <input
           name="password"
-          type="password"
+          type={showPassword}
           placeholder="SENHA"
           data-testid="password-input"
           value={ password }
           onChange={ ({target: { value }}) => setPassword(value) }
         />
+        <label htmlFor="reveal-password"> 
+          <input 
+            type="checkbox" 
+            id="reveal-password" 
+            onClick={({target: {checked}}) => handleShowPassword(checked)}
+          />
+          Mostrar senha 
+        </label>
         <button
           type="submit"
           disabled={ blockSubmit }
