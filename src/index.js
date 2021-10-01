@@ -8,7 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import store from './store';
 
 ReactDOM.render(
-  <BrowserRouter basename="project-trybewallet">
+  <BrowserRouter>
     <Provider store={ store }>
       <App />
     </Provider>
